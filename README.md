@@ -30,6 +30,57 @@ When prompting the agent to generate a slide deck from images or data, explicitl
 - **Mandatory Image Handling:** Uploads local images to Google Drive first and feeds those generated URLs into Google Slides.
 - **Premium Aesthetics:** Enforces High contrast, professional color palettes, and modern typography styles on all generated slides.
 
+### Creating the Executive Slides Generation Flow Skill
+
+To create this skill in your setup, create the directory `~/.gemini/jetski/skills/executive-slides-flow` and create a `SKILL.md` file inside it with the following content:
+
+```markdown
+---
+name: Executive Slides Generation Flow
+description: "Guidelines and procedures for creating modern, executive-polished Google Slides from data or queries, including handling image assets."
+---
+
+# Executive Slides Generation Flow
+
+This skill provides the mandatory guidelines and workflow steps for creating Google Slides presentations. When asked to generate a deck from data, Looker queries, or provided images, you **MUST** follow this procedure to ensure the output is professional, modern, and correctly rendered.
+
+## Overview
+
+Generating high-quality, modern presentations requires careful curation of content and stringent handling of visual assets. 
+
+1. **Asset Management First**: All local images or visual data must be uploaded and hosted on Google Drive before they can be added to Google Slides.
+2. **Executive Polish**: Slides must not be generic; they should feature high-contrast, modern typography, properly aligned elements, and a clean, spacious layout.
+
+## 1. Handling Images and Visual Assets
+
+Google Slides API requires a publicly accessible URL (within the target workspace) to insert images. You cannot pass local file paths or raw image bytes directly to the slide creation tools.
+
+- **Any time an image is provided or generated (e.g., from a Looker query chart)**, you must first create it as a file in Google Drive using the `gws-drive` skill.
+- Upon successful upload to Drive, extract the **web content link** or the appropriate accessible URL.
+- Pass this Drive URL to the `gws-slides` skill when inserting the image into your presentation framework.
+
+## 2. Design and Executive Polish
+
+Presentations must exude professionalism and a modern aesthetic. Apply the following design principles to all generated slides:
+
+- **Typography:** Use modern, clean sans-serif fonts (e.g., Roboto, Open Sans, or Inter if available). Ensure clear hierarchy (large, bold titles, readable body text).
+- **Color Palette:** Avoid harsh, default primary colors. Use a sophisticated, cohesive color palette (e.g., deep slates, subtle blues, muted grays) with high contrast for text.
+- **Layout:** Embrace whitespace (negative space). Do not clutter slides with excessive text. Use bullet points sparingly and favor visual representations (charts, icons, clean tables) where possible.
+- **Alignment:** Ensure all elements (titles, images, text boxes) are perfectly aligned to a grid system.
+- **Consistency:** Maintain a uniform design language across the entire deck—consistent title placement, font sizes, and color usage.
+
+## Workflow Execution Steps
+
+When executing a user request to build a slide deck:
+
+1. **Plan Content:** Draft the narrative structure and identify required visual assets.
+2. **Generate Visuals:** Run any necessary queries (e.g., Looker), generate the visual charts, and save them locally.
+3. **Upload to Drive:** Use the Drive skill to upload all local images and retrieve their URLs.
+4. **Build the Deck:** Use the Slides skill to create the presentation.
+5. **Apply Polish:** Structure the slides, insert the image URLs, and apply the Executive Polish design principles specified above. 
+6. **Delivery:** Provide the user with the final link to the Google Slides presentation.
+```
+
 ## Setup MCP Servers (`mcp_config.json`)
 
 To enable the agent to query Looker and interact with Google Workspace APIs natively, you must configure the MCP servers in your `mcp_config.json` file.
