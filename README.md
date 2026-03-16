@@ -2,6 +2,8 @@
 
 This document outlines the setup steps required to build a workflow that runs a Looker query, generates a chart image, uploads it to Google Drive, and creates a Google Slides presentation.
 
+![Slide Gen and IDE screenshot](./auto-slide-gen-looker.png)
+
 ## Prerequisites: Install Required Skills
 
 To interact with Google Workspace APIs (specifically Drive and Slides), you need to install the following Gemini skills:
